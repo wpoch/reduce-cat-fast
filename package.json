@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/wpoch/reduce-cat-fast/issues"
   },
-  "homepage": "https://github.com/wpoch/reduce-cat-fast#readme"
+  "homepage": "https://github.com/wpoch/reduce-cat-fast#readme",
+  "dependencies": {
+    "yargs": "^15.1.0"
+  }
 }
