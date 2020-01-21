@@ -1,0 +1,27 @@
+{
+  "name": "reduce-cat-fast",
+  "version": "0.0.1",
+  "description": "Reduce Cat Fast",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wpoch/reduce-cat-fast.git"
+  },
+  "keywords": [
+    "cat",
+    "ai",
+    "tensorflow",
+    "reduce",
+    "computer",
+    "vision"
+  ],
+  "author": "Walter Poch",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/wpoch/reduce-cat-fast/issues"
+  },
+  "homepage": "https://github.com/wpoch/reduce-cat-fast#readme"
+}
