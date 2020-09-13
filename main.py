@@ -6,22 +6,22 @@ from lib.servo.Raspi_MotorHAT import Raspi_MotorHAT, Raspi_DCMotor, Raspi_Steppe
 import time
 import atexit
 from event_bus import EventBus
-from lib.waveshare_epd import epd2in7
-from PIL import Image, ImageDraw, ImageFont
+# from lib.waveshare_epd import epd2in7
+# from PIL import Image, ImageDraw, ImageFont
 
-picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
-
+# picdir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'pic')
+# print(picdir)
 DEFAULT_BELT_DRIVE_TIME = os.environ.get('DEFAULT_BELT_DRIVE_TIME') or 2
 CATS_ALLOWED_TO_EAT = (os.environ.get('CATS_ALLOWED_TO_EAT') or 'lola').split(' ')
 bus = EventBus()
-draw = None
-font24 = None
+# draw = None
+# font24 = None
 
 
 @bus.on('cat-detected')
 def on_cat_detected_check_id(id):
     print('on_cat_detected_check_id', id)
-    draw.text((10, 0), 'hello ' + id, font=font24, fill=0)
+    # draw.text((10, 0), 'hello ' + id, font=font24, fill=0)
     # if id in CATS_ALLOWED_TO_EAT:
     bus.emit('start-belt', DEFAULT_BELT_DRIVE_TIME)
     # else:
@@ -31,8 +31,7 @@ def on_cat_detected_check_id(id):
 @bus.on('start-belt')
 def on_start_belt(timeout):
     print('on_start_belt', timeout)
-    print("Interleaved coil steps")
-    myStepper.step(200, Raspi_MotorHAT.FORWARD, Raspi_MotorHAT.INTERLEAVE)
+    myStepper.step(200, Raspi_MotorHAT.FORWARD, Raspi_MotorHAT.SINGLE)
     time.sleep(timeout)
     bus.emit('stop-belt')
 
@@ -40,7 +39,7 @@ def on_start_belt(timeout):
 @bus.on('stop-belt')
 def on_stop_belt():
     print('on_stop_belt')
-    draw.text((10, 0), 'Done! ', font=font24, fill=0)
+    # draw.text((10, 0), 'Done! ', font=font24, fill=0)
 
 
 # recommended for auto-disabling motors on shutdown!
@@ -65,13 +64,14 @@ if __name__ == '__main__':
         myStepper = mh.getStepper(200, 1)  # 200 steps/rev, motor port #1
         myStepper.setSpeed(30)  # 30 RPM
         atexit.register(turnOffMotors)
-        print('Connecting to the e-reader')
-        epd = epd2in7.EPD()
-        epd.init()
-        epd.Clear(0xFF)
-        font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
-        Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
-        draw = ImageDraw.Draw(Himage)
+        # print('Connecting to the e-reader')
+        # epd = epd2in7.EPD()
+        # epd.init()
+        # epd.Clear(0xFF)
+        # print(os.path.join(picdir, 'Font.ttc'))
+        # font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
+        # Himage = Image.new('1', (epd.height, epd.width), 255)  # 255: clear the frame
+        # draw = ImageDraw.Draw(Himage)
 
         print('Waiting for RFID/NFC card...')
         while True:
@@ -82,10 +82,10 @@ if __name__ == '__main__':
             if uid is None:
                 continue
             print('Found card with UID:', [hex(i) for i in uid])
-            bus.emit('cat-detected', uid)
+            bus.emit('cat-detected', uid.decode())
     except Exception as e:
         print(e)
     finally:
         GPIO.cleanup()
-        epd.Dev_exit()
-        epd2in7.epdconfig.module_exit()
+        # epd.Dev_exit()
+        # epd2in7.epdconfig.module_exit()
