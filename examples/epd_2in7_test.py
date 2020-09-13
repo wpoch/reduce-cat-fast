@@ -2,13 +2,10 @@
 # -*- coding:utf-8 -*-
 import sys
 import os
-picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
-libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
-if os.path.exists(libdir):
-    sys.path.append(libdir)
+picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), '../pic')
 
 import logging
-from waveshare_epd import epd2in7
+from lib.waveshare_epd import epd2in7
 import time
 from PIL import Image,ImageDraw,ImageFont
 import traceback

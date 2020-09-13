@@ -4,11 +4,11 @@ This example shows connecting to the PN532 and reading the GPIOs.
 
 import RPi.GPIO as GPIO
 
-from pn532 import *
+from lib.pn532 import *
 
 pn532 = PN532_SPI(reset=20, cs=4, debug=False)
-#pn532 = PN532_I2C(debug=False, reset=20, req=16)
-#pn532 = PN532_UART(reset=20, debug=False)
+# pn532 = PN532_I2C(debug=False, reset=20, req=16)
+# pn532 = PN532_UART(reset=20, debug=False)
 
 ic, ver, rev, support = pn532.get_firmware_version()
 print('Found PN532 with firmware version: {0}.{1}'.format(ver, rev))
