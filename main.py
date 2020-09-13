@@ -7,10 +7,9 @@ import time
 import atexit
 from event_bus import EventBus
 from lib.waveshare_epd import epd2in7
-from PIL import Image,ImageDraw,ImageFont
+from PIL import Image, ImageDraw, ImageFont
 
 picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
-
 
 DEFAULT_BELT_DRIVE_TIME = os.environ.get('DEFAULT_BELT_DRIVE_TIME') or 2
 CATS_ALLOWED_TO_EAT = (os.environ.get('CATS_ALLOWED_TO_EAT') or 'lola').split(' ')
@@ -18,10 +17,11 @@ bus = EventBus()
 draw = None
 font24 = None
 
+
 @bus.on('cat-detected')
 def on_cat_detected_check_id(id):
     print('on_cat_detected_check_id', id)
-    draw.text((10, 0), 'hello ' + id, font = font24, fill = 0)
+    draw.text((10, 0), 'hello ' + id, font=font24, fill=0)
     # if id in CATS_ALLOWED_TO_EAT:
     bus.emit('start-belt', DEFAULT_BELT_DRIVE_TIME)
     # else:
@@ -42,12 +42,14 @@ def on_stop_belt():
     print('on_stop_belt')
     draw.text((10, 0), 'Done! ', font=font24, fill=0)
 
+
 # recommended for auto-disabling motors on shutdown!
 def turnOffMotors():
     mh.getMotor(1).run(Raspi_MotorHAT.RELEASE)
     mh.getMotor(2).run(Raspi_MotorHAT.RELEASE)
     mh.getMotor(3).run(Raspi_MotorHAT.RELEASE)
     mh.getMotor(4).run(Raspi_MotorHAT.RELEASE)
+
 
 if __name__ == '__main__':
     print('RCF - Reduce Cat Fast\n')
