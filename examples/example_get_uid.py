@@ -5,9 +5,9 @@ is the most reliable and universally supported.
 After initialization, try waving various 13.56MHz RFID cards over it!
 """
 
+from .lib.pn532 import PN532_SPI
 import RPi.GPIO as GPIO
 
-from lib.pn532 import *
 
 if __name__ == '__main__':
     try:
